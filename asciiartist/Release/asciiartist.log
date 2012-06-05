@@ -1,4 +1,4 @@
-﻿Build started 6/5/2012 4:05:32 PM.
+﻿Build started 6/5/2012 4:15:23 PM.
      1>Project "C:\Users\LINNEA\Documents\GitHub\asciiartistpp\asciiartist\asciiartist.vcxproj" on node 2 (Build target(s)).
          C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
@@ -12,4 +12,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:08.69
+Time Elapsed 00:00:08.31
