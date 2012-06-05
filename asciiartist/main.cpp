@@ -29,11 +29,11 @@ int main(int argc, char **argv)
 	InitializeMagick(*argv);
 	
 	Image piccy;
-	piccy.read("word.gif");
-	spaceFill(piccy, 7);
+	piccy.read("mona-lisa.jpg");
+	spaceFill(piccy, 5);
 	
-	int x = 0;
-	cin >> x;
+	//int x = 0;
+	//cin >> x;
 
 }
 
@@ -52,7 +52,7 @@ void spaceFill(Image& piccy, int boxsize)
 	Image piccyedges(piccy);
 	piccyedges.edge();
 	piccyedges.write("edges.bmp");
-	cerr << "made edges.bmp" << endl;
+	//cerr << "made edges.bmp" << endl;
 
 	for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
 		for (size_t j = 0; j < piccy.rows()/boxsize; ++j) {
@@ -88,7 +88,7 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** is
 	// for boxpixels, check for edges
 	// if no edges, box over?
 	if (x < 0 || y < 0 || x+boxsize > piccy.columns() || y+boxsize > piccy.rows() ) {
-		cerr << "out of bounds found at " << x << "," << y << endl;
+		//cerr << "out of bounds found at " << x << "," << y << endl;
 		return;
 	}
 
@@ -122,9 +122,9 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** is
 	} else {
 		auto colorpix = piccy.getPixels(x, y, boxsize, boxsize);
 		float boxgrey = calcgrey(colorpix, boxsize);
-		isdone[x/boxsize][y/boxsize] = asciifill(boxgrey, ".+o$#");
+		isdone[x/boxsize][y/boxsize] = asciifill(boxgrey, " .:-=+*#%@");
 
-		cerr << "found an edge at " << x <<"," << y << endl;
+		//cerr << "found an edge at " << x <<"," << y << endl;
 	}
 
 }
