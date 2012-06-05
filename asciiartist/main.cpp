@@ -2,6 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <libavcodec\avcodec.h>
+#include <libavfilter\avfilter.h>
+#include <libavutil\avutil.h>
 
 using namespace std;
 using namespace Magick;
