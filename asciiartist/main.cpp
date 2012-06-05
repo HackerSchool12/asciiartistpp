@@ -29,11 +29,12 @@ int main(int argc, char **argv)
 	InitializeMagick(*argv);
 	
 	Image piccy;
-	piccy.read("word.gif");
-	spaceFill(piccy, 7);
+	piccy.read("fsm.jpg");
+	spaceFill(piccy, 20);
 	
 	int x = 0;
-	cin >> x;
+	cout<< "done";
+
 
 }
 
@@ -124,7 +125,7 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** is
 		float boxgrey = calcgrey(colorpix, boxsize);
 		isdone[x/boxsize][y/boxsize] = asciifill(boxgrey, ".+o$#");
 
-		cerr << "found an edge at " << x <<"," << y << endl;
+	//	cerr << "found an edge at " << x <<"," << y << endl;
 	}
 
 }
