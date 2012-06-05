@@ -19,7 +19,9 @@ using namespace Magick;
  * 
  */
 void spaceFill(Image& piccy, int boxsize);
-void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** isdone);
+void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** isdone);
+float calcgrey(PixelPacket* pixels, int boxsize);
+char asciifill(float grey, string possibleascii);
 
 int main(int argc, char **argv)
 {
@@ -34,13 +36,14 @@ int main(int argc, char **argv)
 
 }
 
+
 void spaceFill(Image& piccy, int boxsize)
 {
-	bool** isdone = new bool*[piccy.columns()/boxsize];
+	char** isdone = new char*[piccy.columns()/boxsize];
 	for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
-		isdone[i] = new bool[piccy.rows()/boxsize];
+		isdone[i] = new char[piccy.rows()/boxsize];
 		for (size_t j = 0; j < piccy.rows()/boxsize; ++j) {
-			isdone[i][j] = false;
+			isdone[i][j] = '\n';
 		}
 	}
 
@@ -57,7 +60,7 @@ void spaceFill(Image& piccy, int boxsize)
 
 // theoretically this boxes up lots of things maybe
 // floodBox!
-void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** isdone)
+void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** isdone)
 {
 	//cerr << "boxing" << endl;
 	
@@ -68,7 +71,7 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** is
 		return;
 	}
 
-	if (isdone[x/boxsize][y/boxsize]) {
+	if (isdone[x/boxsize][y/boxsize] != '\n') {
 		return;
 	}
 	
@@ -85,21 +88,34 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** is
 
 	if (isblack) {
 		// color black
-		piccy.fillColor("black");
-		piccy.strokeColor("red");
-		piccy.draw(DrawableRectangle(x, y, x+boxsize, y+boxsize));
-		isdone[x/boxsize][y/boxsize] = true;
+		//piccy.fillColor("black");
+		//piccy.strokeColor("red");
+		//piccy.draw(DrawableRectangle(x, y, x+boxsize, y+boxsize));
+		auto colorpix = piccy.getPixels(x, y, boxsize, boxsize);
+		float boxgrey = calcgrey(colorpix, boxsize);
+		isdone[x/boxsize][y/boxsize] = asciifill(boxgrey, ".+o$#"); //ascii character for thing
 
 		boxup(piccy, piccyedges, x+boxsize, y, boxsize, isdone);
 		boxup(piccy, piccyedges, x, y+boxsize, boxsize, isdone);
 		boxup(piccy, piccyedges, x-boxsize, y, boxsize, isdone);
 		boxup(piccy, piccyedges, x, y-boxsize, boxsize, isdone);
 	} else {
-		isdone[x/boxsize][y/boxsize] = true;
+		auto colorpix = piccy.getPixels(x, y, boxsize, boxsize);
+		float boxgrey = calcgrey(colorpix, boxsize);
+		isdone[x/boxsize][y/boxsize] = asciifill(boxgrey, ".+o$#");
 
 		cerr << "found an edge at " << x <<"," << y << endl;
 	}
 
+}
 
+float calcgrey(PixelPacket* pixels)
+{
+	//
+}
 
+char asciifill(float grey, string possibleascii)
+{
+	int greyval = (int)(grey*possibleascii.length);
+	return possibleascii[greyval];
 }
