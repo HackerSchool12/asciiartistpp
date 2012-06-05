@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "Magick++.h"
 #include <iostream>
 #include <string>
@@ -109,9 +110,16 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** is
 
 }
 
-float calcgrey(PixelPacket* pixels)
+float calcgrey(PixelPacket* pixels, int boxsize)
 {
-	//
+	float greycolor =0;
+	for_each( pixels, pixels+(boxsize*boxsize),
+		[&greycolor](MagickCore::PixelPacket pixel){ 
+			float grey = (pixel.red+ pixel.green + pixel.blue) / 3;
+			greycolor += grey;
+		});
+	greycolor = greycolor / (boxsize*boxsize);
+	return greycolor;
 }
 
 char asciifill(float grey, string possibleascii)
