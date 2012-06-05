@@ -1,9 +1,9 @@
-﻿Build started 6/5/2012 2:08:02 PM.
-     1>Project "C:\Users\Fode\Documents\asciiartistpp\asciiartist\asciiartist.vcxproj" on node 2 (Build target(s)).
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /O2 /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+﻿Build started 6/5/2012 2:25:46 PM.
+     1>Project "C:\Users\LINNEA\Documents\GitHub\asciiartistpp\asciiartist\asciiartist.vcxproj" on node 2 (Build target(s)).
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /O2 /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
      1>cl : Command line error D8016: '/ZI' and '/O2' command-line options are incompatible
-     1>Done Building Project "C:\Users\Fode\Documents\asciiartistpp\asciiartist\asciiartist.vcxproj" (Build target(s)) -- FAILED.
+     1>Done Building Project "C:\Users\LINNEA\Documents\GitHub\asciiartistpp\asciiartist\asciiartist.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:00.98
+Time Elapsed 00:00:00.62
