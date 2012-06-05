@@ -59,7 +59,7 @@ void spaceFill(Image& piccy, int boxsize)
 // floodBox!
 void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** isdone)
 {
-	cerr << "boxing" << endl;
+	//cerr << "boxing" << endl;
 	
 	// for boxpixels, check for edges
 	// if no edges, box over?
@@ -74,9 +74,9 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** is
 	
 	auto piccypix = piccyedges.getPixels(x, y, boxsize, boxsize);
 	bool isblack = true;
-	for_each( piccypix, piccypix+(boxsize*boxsize*sizeof(MagickCore::PixelPacket)),
+	for_each( piccypix, piccypix+(boxsize*boxsize),
 		[&isblack](MagickCore::PixelPacket pixel){ 
-			cout << "RGB: " << pixel.red << "," << pixel.green << "," << pixel.blue << endl;
+//			cout << "RGB: " << pixel.red << "," << pixel.green << "," << pixel.blue << endl;
 			if (isblack == true && (pixel.red != 0 || pixel.green != 0 || pixel.blue != 0)) {
 				isblack = false;
 			}
@@ -95,6 +95,8 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** is
 		boxup(piccy, piccyedges, x-boxsize, y, boxsize, isdone);
 		boxup(piccy, piccyedges, x, y-boxsize, boxsize, isdone);
 	} else {
+		isdone[x/boxsize][y/boxsize] = true;
+
 		cerr << "found an edge at " << x <<"," << y << endl;
 	}
 
