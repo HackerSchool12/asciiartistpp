@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "Magick++.h"
 #include <iostream>
 #include <string>
@@ -54,7 +53,14 @@ void spaceFill(Image& piccy, int boxsize)
 	piccyedges.write("edges.bmp");
 	cerr << "made edges.bmp" << endl;
 
-	boxup(piccy, piccyedges, 10, 10, boxsize, isdone);
+	for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
+		for (size_t j = 0; j < piccy.rows()/boxsize; ++j) {
+			if (isdone[i][j] == '\n') {
+				boxup(piccy, piccyedges, i*boxsize, j*boxsize, boxsize, isdone);
+			}
+		}
+	}
+	
 	piccy.write("fill.bmp");
 	
 }
@@ -124,6 +130,6 @@ float calcgrey(PixelPacket* pixels, int boxsize)
 
 char asciifill(float grey, string possibleascii)
 {
-	int greyval = (int)(grey*possibleascii.length);
+	int greyval = (int)(grey*possibleascii.size());
 	return possibleascii[greyval];
 }
