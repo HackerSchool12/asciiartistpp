@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	
 	Image piccy;
 	piccy.read("word.gif");
-	spaceFill(piccy, 5);
+	spaceFill(piccy, 7);
 	
 	int x = 0;
 	cin >> x;
@@ -65,8 +65,8 @@ void spaceFill(Image& piccy, int boxsize)
 	ofstream theart;
 	theart.open("theart.txt");
 	
-	for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
-		for (size_t j = 0; j < piccy.rows()/boxsize; ++j) {
+	for (size_t j = 0; j < piccy.rows()/boxsize; ++j) {
+		for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
 			theart << isdone[i][j];
 		}
 		theart << endl;
@@ -100,7 +100,6 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** is
 	bool isblack = true;
 	for_each( piccypix, piccypix+(boxsize*boxsize),
 		[&isblack](MagickCore::PixelPacket pixel){ 
-//			cout << "RGB: " << pixel.red << "," << pixel.green << "," << pixel.blue << endl;
 			if (isblack == true && (pixel.red != 0 || pixel.green != 0 || pixel.blue != 0)) {
 				isblack = false;
 			}
@@ -130,7 +129,7 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, char** is
 
 }
 
-float calcgrey(PixelPacket* pixels, int boxsize)
+float calcgrey(PixelPacket* const pixels, int const boxsize)
 {
 	float greycolor =0;
 	for_each( pixels, pixels+(boxsize*boxsize),
@@ -144,7 +143,8 @@ float calcgrey(PixelPacket* pixels, int boxsize)
 
 char asciifill(float grey, string possibleascii)
 {
-	int greyval = (int)((grey/255)*possibleascii.size()-1) ;
-	cerr << possibleascii[greyval];
+
+	int greyval = (int)((grey/USHRT_MAX)*possibleascii.size()-1) ;
+ //   cerr << greyval << endl;
 	return possibleascii[greyval];
 }
