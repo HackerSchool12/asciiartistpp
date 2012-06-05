@@ -20,6 +20,7 @@ using namespace Magick;
  */
 void spaceFill(Image& piccy, int boxsize);
 void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** isdone);
+float calcgrey(PixelPacket* pixels,int boxsize);
 
 int main(int argc, char **argv)
 {
@@ -99,7 +100,16 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** is
 
 		cerr << "found an edge at " << x <<"," << y << endl;
 	}
+}
 
-
-
+float calcgrey(PixelPacket* pixels, int boxsize)
+{
+	float greycolor =0;
+	for_each( pixels, pixels+(boxsize*boxsize),
+		[&greycolor](MagickCore::PixelPacket pixel){ 
+			float grey = (pixel.red+ pixel.green + pixel.blue) / 3;
+			greycolor += grey;
+		});
+	greycolor = greycolor / (boxsize*boxsize);
+	return greycolor;
 }
