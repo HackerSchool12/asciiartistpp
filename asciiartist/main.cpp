@@ -3,8 +3,7 @@
 #include <string>
 
 using namespace std;
-
-typedef Magick::Image image;
+using namespace Magick;
 
 /* in which we obtain ascii art
  * (maybe)
@@ -19,24 +18,27 @@ typedef Magick::Image image;
  * have ascii art
  * 
  */
-void spaceFill(image& piccy, int boxsize);
-void boxup(image& piccy, image& piccyedges, int x, int y, int boxsize, bool** isdone);
+void spaceFill(Image& piccy, int boxsize);
+void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** isdone);
 
-int main()
+int main(int argc, char **argv)
 {
-	image piccy("word.png");
+	InitializeMagick(*argv);
+	
+	Image piccy;
+	piccy.read("word.gif");
 	spaceFill(piccy, 20);
 
 }
 
-void spaceFill(image& piccy, int boxsize)
+void spaceFill(Image& piccy, int boxsize)
 {
 	bool** isdone = new bool*[piccy.columns()/boxsize];
-	for (int i = 0; i < piccy.columns()/boxsize; ++i) {
+	for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
 		isdone[i] = new bool[piccy.rows()/boxsize];
 	}
 
-	image piccyedges(piccy);
+	Image piccyedges(piccy);
 	piccyedges.edge();
 
 	boxup(piccy, piccyedges, 0, 0, boxsize, isdone);
@@ -47,7 +49,7 @@ void spaceFill(image& piccy, int boxsize)
 
 // theoretically this boxes up lots of things maybe
 // floodBox!
-void boxup(image& piccy, image& piccyedges, int x, int y, int boxsize, bool** isdone)
+void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** isdone)
 {
 	// for boxpixels, check for edges
 	// if no edges, box over?
@@ -73,7 +75,7 @@ void boxup(image& piccy, image& piccyedges, int x, int y, int boxsize, bool** is
 		// color black
 		piccy.fillColor("black");
 		piccy.strokeColor("red");
-		piccy.draw(Magick::DrawableRectangle(x, y, x+boxsize, y+boxsize));
+		piccy.draw(DrawableRectangle(x, y, x+boxsize, y+boxsize));
 		isdone[x/boxsize][y/boxsize] = true;
 
 		boxup(piccy, piccyedges, x+boxsize, y, boxsize, isdone);
