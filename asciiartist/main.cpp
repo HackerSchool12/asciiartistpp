@@ -27,7 +27,10 @@ int main(int argc, char **argv)
 	
 	Image piccy;
 	piccy.read("word.gif");
-	spaceFill(piccy, 20);
+	spaceFill(piccy, 5);
+
+	int x = 0;
+	cin >> x;
 
 }
 
@@ -36,24 +39,32 @@ void spaceFill(Image& piccy, int boxsize)
 	bool** isdone = new bool*[piccy.columns()/boxsize];
 	for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
 		isdone[i] = new bool[piccy.rows()/boxsize];
+		for (size_t j = 0; j < piccy.rows()/boxsize; ++j) {
+			isdone[i][j] = false;
+		}
 	}
+
 
 	Image piccyedges(piccy);
 	piccyedges.edge();
-
-	boxup(piccy, piccyedges, 0, 0, boxsize, isdone);
-	
-	piccy.write("fill.bmp");
 	piccyedges.write("edges.bmp");
+	cerr << "made edges.bmp" << endl;
+
+	boxup(piccy, piccyedges, 10, 10, boxsize, isdone);
+	piccy.write("fill.bmp");
+	
 }
 
 // theoretically this boxes up lots of things maybe
 // floodBox!
 void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** isdone)
 {
+	cerr << "boxing" << endl;
+	
 	// for boxpixels, check for edges
 	// if no edges, box over?
 	if (x < 0 || y < 0 || x+boxsize > piccy.columns() || y+boxsize > piccy.rows() ) {
+		cerr << "out of bounds found at " << x << "," << y << endl;
 		return;
 	}
 
@@ -65,6 +76,7 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** is
 	bool isblack = true;
 	for_each( piccypix, piccypix+(boxsize*boxsize*sizeof(MagickCore::PixelPacket)),
 		[&isblack](MagickCore::PixelPacket pixel){ 
+			cout << "RGB: " << pixel.red << "," << pixel.green << "," << pixel.blue << endl;
 			if (isblack == true && (pixel.red != 0 || pixel.green != 0 || pixel.blue != 0)) {
 				isblack = false;
 			}
@@ -82,6 +94,8 @@ void boxup(Image& piccy, Image& piccyedges, int x, int y, int boxsize, bool** is
 		boxup(piccy, piccyedges, x, y+boxsize, boxsize, isdone);
 		boxup(piccy, piccyedges, x-boxsize, y, boxsize, isdone);
 		boxup(piccy, piccyedges, x, y-boxsize, boxsize, isdone);
+	} else {
+		cerr << "found an edge at " << x <<"," << y << endl;
 	}
 
 
