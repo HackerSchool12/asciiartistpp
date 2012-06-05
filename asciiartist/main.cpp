@@ -1,5 +1,6 @@
 #include "Magick++.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
@@ -30,7 +31,7 @@ int main(int argc, char **argv)
 	Image piccy;
 	piccy.read("word.gif");
 	spaceFill(piccy, 5);
-
+	
 	int x = 0;
 	cin >> x;
 
@@ -61,6 +62,19 @@ void spaceFill(Image& piccy, int boxsize)
 		}
 	}
 	
+	ofstream theart;
+	theart.open("theart.txt");
+	
+	for (size_t i = 0; i < piccy.columns()/boxsize; ++i) {
+		for (size_t j = 0; j < piccy.rows()/boxsize; ++j) {
+			theart << isdone[i][j];
+		}
+		theart << endl;
+	}
+	theart << endl;
+	
+	theart.close();
+
 	piccy.write("fill.bmp");
 	
 }
@@ -130,6 +144,7 @@ float calcgrey(PixelPacket* pixels, int boxsize)
 
 char asciifill(float grey, string possibleascii)
 {
-	int greyval = (int)(grey*possibleascii.size());
+	int greyval = (int)((grey/255)*possibleascii.size()-1) ;
+	cerr << possibleascii[greyval];
 	return possibleascii[greyval];
 }
