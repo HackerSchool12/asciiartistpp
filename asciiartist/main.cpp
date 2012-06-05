@@ -19,6 +19,9 @@ typedef Magick::Image image;
  * have ascii art
  * 
  */
+void spaceFill(image& piccy, int boxsize);
+void boxup(image& piccy, image& piccyedges, int x, int y, int boxsize, bool** isdone);
+
 int main()
 {
 	image piccy("word.png");

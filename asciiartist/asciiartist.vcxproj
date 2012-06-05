@@ -42,10 +42,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Program Files %28x86%29\ImageMagick-6.7.7-Q16\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files\ImageMagick-6.7.7-Q16\include;C:\Program Files %28x86%29\ImageMagick-6.7.7-Q16\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Program Files %28x86%29\ImageMagick-6.7.7-Q16\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Program Files\ImageMagick-6.7.7-Q16\lib;C:\Program Files %28x86%29\ImageMagick-6.7.7-Q16\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -54,7 +54,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>CORE_RL_Magick++_.dll;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
